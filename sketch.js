@@ -7,10 +7,10 @@ function setup() {
   
 
  
-for(i = 0 ; i < 1 ; i ++){
- BB[i] = new ball(random(width),random(height));
+//for(i = 0 ; i < 1 ; i ++){ <-------- Killa
+ BB[5] = new ball(random(width),random(height));// <-----killa
  
-}
+//} <-------- killa
 
 console.log(BB.length);
 
@@ -18,27 +18,29 @@ console.log(BB.length);
 
 function draw() {
  background(40);
- ellipse(50, 50 ,50 );
+  ellipse(50, 50 ,50 );
  
 
 
 
 for(i = 0 ; i < BB.length ; i ++){
  BB[i].update();
+ BB[i].collide(BB[i],BB[i+1]);// <-------------------Killa
  BB[i].end   ();
  BB[i].show  ();
  BB[i].eat    ();
 }
 }
-//////////////////////
+
 function ball (x,y){
   
-  
+  this.ref = createVector(0,0);
  
   this.pos = createVector(x,y);
   this.v = p5.Vector.random2D(1,1);
   this.acc = createVector(0,0);
   this.mass = 5;
+  
   
 this.update = function (){
   
@@ -46,14 +48,20 @@ this.update = function (){
  this.v.add(this.acc);
  this.acc.mult(0);
 };
-
+this.collide = function(b1,b2){ // <----------------Killa
+  if(b1.pos = b2.pos){
+      b1.v *= -1;
+      b2.v *= -1;
+     }
+};
+  
 this.show = function(){
     
     
   
      
     
-                                         // this.mass is how big it is 
+   
     ellipse(this.pos.x , this.pos.y , this.mass );
   
   
